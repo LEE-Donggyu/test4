@@ -87,11 +87,11 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
-        if(dialog != null){
+        if (dialog != null && dialog.isShowing()) {
             dialog.dismiss();
-            dialog = null;
         }
     }
+
 }
