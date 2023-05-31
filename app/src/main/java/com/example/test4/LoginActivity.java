@@ -60,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                intent.putExtra("userID", userID); // 아이디값을 Intent에 추가
+                                                intent.putExtra("userPassword", userPassword); // 비밀번호값을 Intent에 추가
                                                 LoginActivity.this.startActivity(intent);
                                                 finish();
                                             }
@@ -94,4 +96,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public static class LostItemUploadRequest {
+    }
 }

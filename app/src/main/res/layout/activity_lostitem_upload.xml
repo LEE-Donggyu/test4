@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        >
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,15 +24,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="분실물"
-                android:textSize="40dp"
-                />
+                android:textSize="40dp" />
+
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="분실물 입력"
-                android:textSize="40dp"
                 android:background="@color/gray"
+                android:hint="분실물 입력"
                 android:textColorHint="@color/white"
+                android:textSize="40dp"
+                android:id="@+id/LostItemNameText"
+                android:inputType="text"
                 />
 
         </LinearLayout>
@@ -45,16 +48,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="사진"
-                android:textSize="40dp"
-                />
+                android:textSize="40dp" />
+
             <Button
+                android:id="@+id/findimgButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/findimgButton"
                 android:text="사진 찾기"
-                android:textSize="40dp"
-                />
-
+                android:textSize="40dp" />
 
 
         </LinearLayout>
@@ -62,22 +63,25 @@
         <LinearLayout
             android:layout_width="200dp"
             android:layout_height="200dp"
-            >
+            android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/uploadimg"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:src="@drawable/hnulogo"
-                android:id="@+id/uploadimg"
-                />
-
+                android:src="@drawable/hnulogo" />
         </LinearLayout>
 
-
+        <Button
+            android:id="@+id/finaluploadButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uploadimg"
+            android:text="업로드"
+            android:textSize="40dp" />
 
 
     </LinearLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
