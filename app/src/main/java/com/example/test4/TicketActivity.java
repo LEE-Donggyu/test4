@@ -16,6 +16,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class TicketActivity extends AppCompatActivity {
@@ -40,11 +41,7 @@ public class TicketActivity extends AppCompatActivity {
 
         ticketListView = findViewById(R.id.reservationList);
         ticketList = new ArrayList<Ticket>();
-        ticketList.add(new Ticket("계룡진잠", "2023-06-04", "LEE", "서대전네거리", "1"));
-        ticketList.add(new Ticket("노은", "2023-06-05", "NAME", "린풀하우스", "2"));
-        ticketList.add(new Ticket("계룡진잠", "2023-06-04", "LEE", "서대전네거리", "1"));
         adapter = new TicketListAdapter(getApplicationContext(), ticketList);
-
         ticketListView.setAdapter(adapter);
 
         new BackgroundTask().execute();
@@ -53,34 +50,41 @@ public class TicketActivity extends AppCompatActivity {
 
     class BackgroundTask extends AsyncTask<Void, Void, String>{
 
-        String target = "http://bestknow98.cafe24.com/TicketList.php";
+        String target;
+
+        @Override
+        protected void onPreExecute(){
+            target = "http://bestknow98.cafe24.com/TicketList.php";
+        }
 
         @Override
         protected String doInBackground(Void... voids) {
             try{
-                URL url = new URL(target);
+                URL url = new URL(target + "?userID=" + userID);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String temp;
                 StringBuilder stringBuilder = new StringBuilder();
                 while((temp = bufferedReader.readLine()) != null){
-                    stringBuilder.append(temp+"\n");
+                    stringBuilder.append(temp + "\n");
                 }
                 bufferedReader.close();
                 inputStream.close();
-                return httpURLConnection.toString().trim();
+                httpURLConnection.disconnect();
+
+                return stringBuilder.toString().trim();
             }
             catch(Exception e){
                 e.printStackTrace();
             }
             return null;
         }
+
         @Override
-        public void onProgressUpdate(Void... values){
+        public void onProgressUpdate(Void...values){
             super.onProgressUpdate();
         }
-
         @Override
         public void onPostExecute(String result){
             try{
@@ -88,7 +92,7 @@ public class TicketActivity extends AppCompatActivity {
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
                 String routename, date, userName, pickupname, turn;
-                while (count < jsonArray.length()) {
+                while(count < jsonArray.length()){
                     JSONObject object = jsonArray.getJSONObject(count);
                     routename = object.getString("routename");
                     date = object.getString("date");
@@ -99,6 +103,8 @@ public class TicketActivity extends AppCompatActivity {
                     ticketList.add(ticket);
                     count++;
                 }
+                Collections.reverse(ticketList);
+                adapter.notifyDataSetChanged();
             }
             catch(Exception e){
                 e.printStackTrace();

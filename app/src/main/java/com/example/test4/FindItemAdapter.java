@@ -36,6 +36,7 @@ public class FindItemAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup parent) {
         View v = View.inflate(context, R.layout.finditem, null);
+
         TextView itemText = v.findViewById(R.id.finditemText);
         TextView nameText = v.findViewById(R.id.nameText);
         TextView dateText = v.findViewById(R.id.dateText);
@@ -45,6 +46,7 @@ public class FindItemAdapter extends BaseAdapter {
         dateText.setText(findList.get(i).getDate());
 
         v.setTag(findList.get(i).getItem());
+
         return v;
 
     }
