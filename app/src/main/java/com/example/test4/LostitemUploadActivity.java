@@ -1,7 +1,5 @@
 package com.example.test4;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -73,19 +73,22 @@ public class LostitemUploadActivity extends AppCompatActivity {
 
                 // 데이터베이스에 업로드 요청
                 uploadData(uploadID, uploadItem, uploadTime, imageString);
+
+                finish();
             }
         });
+
+
     }
 
     private void uploadData(final String userID, final String itemName, final String currentTime, final String imageString) {
-        String url = "http://bestknow98.cafe24.com/LostItem.php"; // TODO: Replace with your PHP file URL
+        String url = "http://bestknow98.cafe24.com/LostItem.php";
 
         StringRequest stringRequest;
         stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // TODO: Handle the response from the server (success or failure)
                         // DB에 저장 성공한 경우 activity_lost_item으로 돌아가기
                         Intent intent = new Intent(LostitemUploadActivity.this, LostItemActivity.class);
                         intent.putExtra("userID", userID);
@@ -96,7 +99,6 @@ public class LostitemUploadActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle the error response from the server
                     }
                 }) {
             @Override

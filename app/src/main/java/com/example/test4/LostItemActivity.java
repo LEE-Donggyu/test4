@@ -3,8 +3,7 @@ package com.example.test4;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.util.Log;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,17 +46,6 @@ public class LostItemActivity extends AppCompatActivity {
             userPassword = intent.getStringExtra("userPassword");
         }
 
-        Button uploadButton = findViewById(R.id.uploadButton);
-        uploadButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent lostItemUploadIntent = new Intent(LostItemActivity.this, LostitemUploadActivity.class);
-                lostItemUploadIntent.putExtra("userID", userID);
-                lostItemUploadIntent.putExtra("userPassword", userPassword);
-                startActivity(lostItemUploadIntent);
-            }
-        });
-
         new BackgroundTask().execute();
     }
 
@@ -96,6 +84,7 @@ public class LostItemActivity extends AppCompatActivity {
         @Override
         public void onPostExecute(String result) {
             try {
+                Log.d("tag",result);
                 JSONObject jsonObject = new JSONObject(result);
                 JSONArray jsonArray = jsonObject.getJSONArray("response");
                 int count = 0;
